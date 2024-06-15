@@ -8,6 +8,14 @@ start:
     mov ss,ax
     mov sp,0x7c00
 
+TestDiskExtension:
+    mov [DriveId], dl
+    mov ah, 0x41
+    mov bx, 0x55aa
+    int 0x13
+    jc NotSupport
+    cmp bx, 0xaa55
+    jne NotSupport
 PrintMessage:
     mov ah,0x13
     mov al,1
@@ -17,11 +25,14 @@ PrintMessage:
     mov cx,MessageLen 
     int 0x10
 
+NotSupport:
 End:
     hlt    
     jmp End
+
+DriveId: db 0
      
-Message:    db "Hello"
+Message:    db "Disk extension is supported!"
 MessageLen: equ $-Message
 
 times (0x1be-($-$$)) db 0
