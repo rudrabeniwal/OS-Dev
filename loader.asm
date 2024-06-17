@@ -22,10 +22,27 @@ start:
     mov bp,Message
     mov cx,MessageLen 
     int 0x10
+LoadKernal:
+    mov si, ReadPacket
+    mov word[si], 0x10 
+    mov word[si+2], 100 
+    mov word[si+4], 0  
+    mov word[si+6], 0x1000   
+    mov dword[si+8], 6    
+    mov dword[si+0xc], 0    
+    mov dl, [DriveId]
+    mov ah, 0x42
+    int 0x13
+    jc ReadError
+
+    mov dl, [DriveId]
+    jmp 0x7e00
+ReadError:
 NotSupport:
 End:
     hlt
     jmp End
 DriveId: db 0
-Message: db "long mode is supported"
+Message: db "kernel is loaded"
 MessageLen: equ $-Message
+ReadPacket: times 16 db 0
