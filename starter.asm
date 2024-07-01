@@ -1,5 +1,5 @@
 bits 16
-extern kernal_main
+extern kernel_main
 start:
     mov ax, cs
     mov ds, ax
@@ -9,13 +9,13 @@ start:
     call enter_protected_mode
     call setup_interrupts
 
-    call 08h:start_kernal
+    call 08h:start_kernel
 setup_interrupts:
     remap_pic:
         mov al, 11h
 
         send_init_cmd_to_pic_master:
-            out 0x20. al 
+            out 0x20, al 
 
         send_init_cmd_to_pic_slave:
             out 0xa0, al 
@@ -91,7 +91,7 @@ start_kernel:
 
     sti 
 
-    call kernal_main
+    call kernel_main
 
 %include "gdt.asm"
 %include "idt.asm"

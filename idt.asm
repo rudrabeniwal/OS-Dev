@@ -1,3 +1,4 @@
+extern interrupt_handler
 isr_0:
     cli
     push 0

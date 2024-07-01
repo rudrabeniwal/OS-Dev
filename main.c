@@ -1,4 +1,4 @@
-volatile unsigned char *video = 0xB8000;
+volatile unsigned char *video = (volatile unsigned char *)0xB8000;
 
 int nextTextPos = 0;
 int currLine = 0;
@@ -11,7 +11,7 @@ void print(char *str)
 {
     int currCharLocationInVidMem, currColorLocationInVidMem;
 
-    while (*str != "\0")
+    while (*str != '\0')
     {
         currCharLocationInVidMem = nextTextPos * 2;
         currColorLocationInVidMem = currCharLocationInVidMem + 1;
@@ -60,7 +60,7 @@ void kernel_main()
 }
 */
 
-void kernal_main()
+void kernel_main()
 {
     print ("Welcome to 539kernel!!!!! nigga");
     println();
