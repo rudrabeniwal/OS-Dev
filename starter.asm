@@ -11,6 +11,49 @@ start:
 
     call 08h:start_kernal
 setup_interrupts:
+    remap_pic:
+        mov al, 11h
+
+        send_init_cmd_to_pic_master:
+            out 0x20. al 
+
+        send_init_cmd_to_pic_slave:
+            out 0xa0, al 
+
+        ; ... ;
+
+        make_irq_starts_from_intr_32_in_pic_master:
+            mov al, 32d
+            out 0x21, al
+
+        make_irq_starts_from_intr_40_in_pic_slave:
+            mov al, 40d
+            out 0xa1, al 
+
+        ; ... ;
+
+        tell_pic_master_where_pic_slave_is_connected:
+            mov al, 02h
+            out 0xa1, al
+
+        ; ... ;
+
+        mov al, 01h
+
+        tell_pic_master_the_arch_is_x86:
+            out 0xa1, al
+
+            ; ... ;
+
+        mov al, 0h
+
+        make_pic_master_enables_all_irqs:
+            out 0x21, al
+
+        make_pic_slave_enablees_all_irqs:
+            out 0xa1, al 
+    load_idt:
+        lidt [idtr - start]
 
     ret
 load_gdt:
@@ -51,3 +94,4 @@ start_kernel:
     call kernal_main
 
 %include "gdt.asm"
+%include "idt.asm"

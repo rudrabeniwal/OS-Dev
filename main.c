@@ -68,3 +68,9 @@ void kernal_main()
     println();
     while(1);
 }
+void interrupt_handler (int interrupt_number)
+{
+    println();
+    print("Interrupt Received");
+    printi(interrupt_number);
+}
