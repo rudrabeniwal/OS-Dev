@@ -1,3 +1,6 @@
+#include "screen.h"
+#include "process.h"
+
 volatile unsigned char *video = (volatile unsigned char *)0xB8000;
 
 int nextTextPos = 0;
@@ -62,10 +65,8 @@ void kernel_main()
 
 void kernel_main()
 {
-    print ("Welcome to 539kernel!!!!! nigga");
-    println();
-    printi(539);
-    println();
+    screen_init();
+    process_init();
     while(1);
 }
 void interrupt_handler (int interrupt_number)

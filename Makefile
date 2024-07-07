@@ -9,13 +9,13 @@ build: $(BOOTSTRAP_FILE) $(KERNEL_FILES)
 	$(ASM) -f bin $(BOOTSTRAP_FILE) -o bootstrap.o
 	$(ASM) -f elf32 $(INIT_KERNEL_FILES) -o starter.o
 	$(CC) $(KERNEL_FLAGS) $(KERNEL_FILES) $(KERNEL_OBJECT)
-	ld -melf_i386 -Tlinker.ld starter.o kernel.elf -o 539kernel.elf
-	objcopy -O binary 539kernel.elf 539kernel.bin
+	ld -melf_i386 -Tlinker.ld starter.o kernel.elf -o myKernel.elf
+	objcopy -O binary myKernel.elf myKernel.bin
 	dd if=bootstrap.o of=kernel.img
-	dd seek=1 conv=sync if=539kernel.bin of=kernel.img bs=512 count=5
+	dd seek=1 conv=sync if=myKernel.bin of=kernel.img bs=512 count=5
 	dd seek=6 conv=sync if=/dev/zero of=kernel.img bs=512 count=2046
 	qemu-system-x86_64 -s kernel.img
 
 # Clean target to remove build artifacts
 clean:
-	rm -f *.o 539kernel.bin kernel.img kernel.elf bootstrap.o 539kernel.elf
+	rm -f *.o myKernel.bin kernel.img kernel.elf bootstrap.o myKernel.elf
