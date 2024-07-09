@@ -3,8 +3,17 @@
 
 volatile unsigned char *video = (volatile unsigned char *)0xB8000;
 
+// Define the global variables here
+process_t *processes [15];  
+int processes_count;
+int curr_pid;
+int next_sch_pid;
+int curr_sch_pid;
+process_t *next_process;
 int nextTextPos = 0;
 int currLine = 0;
+
+//Print
 
 void print(char*);
 void println();

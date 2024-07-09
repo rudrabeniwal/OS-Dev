@@ -1,5 +1,4 @@
 #include "scheduler.h"
-#include "screen.h"
 
 void scheduler_init()
 {
@@ -53,7 +52,7 @@ void scheduler(int eip, int edi, int esi, int ebp, int esp, int ebx, int edx, in
 
     //Part-3
 
-    asm( " mov %0, %%eax;  \
+    asm volatile( " mov %0, %%eax;  \
            mov %1, %%ecx;  \
            mov %2, %%ecx;  \
            mov %3, %%ebx;  \
@@ -71,6 +70,6 @@ void scheduler(int eip, int edi, int esi, int ebp, int esp, int ebx, int edx, in
 
 void run_next_process()
 {
- asm( " sti;     \
-        jmp*%0" :: "r" (next_process->context.eip));
+ asm volatile( " sti;     \
+        jmp *%0" :: "r" (next_process->context.eip));
 }
