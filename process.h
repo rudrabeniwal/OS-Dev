@@ -10,7 +10,7 @@ typedef struct process
  int pid;
  process_context_t context;
  process_state_t state;
- int *base_address;
+ void (*base_address)();
 } process_t;
 
 process_t *processes [15];
@@ -18,4 +18,4 @@ process_t *processes [15];
 int processes_count, curr_pid;
 
 void process_init();
-void process_create (int *, process_t *);
+void process_create (void (*)(), process_t *);

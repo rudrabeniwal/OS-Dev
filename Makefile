@@ -11,7 +11,7 @@ build: $(BOOTSTRAP_FILE) $(KERNEL_FILES)
 	$(CC) $(KERNEL_FLAGS) $(KERNEL_FILES) $(KERNEL_OBJECT)
 	$(CC) $(KERNEL_FLAGS) screen.c -o screen.elf 
 	$(CC) $(KERNEL_FLAGS) process.c -o process.elf 
-	$(CC) $(KERNEL_FLAGS) scheduler -o scheduler.elf 
+	$(CC) $(KERNEL_FLAGS) scheduler.c -o scheduler.elf 
 	ld -melf_i386 -Tlinker.ld starter.o kernel.elf screen.elf process.elf scheduler.elf -o myKernel.elf
 	objcopy -O binary myKernel.elf myKernel.bin
 	dd if=bootstrap.o of=kernel.img
@@ -21,4 +21,4 @@ build: $(BOOTSTRAP_FILE) $(KERNEL_FILES)
 
 # Clean target to remove build artifacts
 clean:
-	rm -f *.o myKernel.bin kernel.img kernel.elf bootstrap.o myKernel.elf
+	rm -f *.o *.elf *.bin myKernel.bin kernel.img

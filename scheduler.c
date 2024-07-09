@@ -1,4 +1,5 @@
 #include "scheduler.h"
+#include "screen.h"
 
 void scheduler_init()
 {
@@ -6,7 +7,7 @@ void scheduler_init()
     curr_sch_pid = 0;
 }
 
-process_t get_next_process()
+process_t *get_next_process()
 {
     process_t *next_process = processes [next_sch_pid];
 
@@ -53,11 +54,11 @@ void scheduler(int eip, int edi, int esi, int ebp, int esp, int ebx, int edx, in
     //Part-3
 
     asm( " mov %0, %%eax;  \
-           mov %0, %%ecx;  \
-           mov %0, %%ecx;  \
-           mov %0, %%ebx;  \
-           mov %0, %%esi;  \
-           mov %0, %%edi;"
+           mov %1, %%ecx;  \
+           mov %2, %%ecx;  \
+           mov %3, %%ebx;  \
+           mov %4, %%esi;  \
+           mov %5, %%edi;"
            :: "r" ( next_process->context.eax), "r"(
             next_process->context.ecx), "r" (
             next_process->context.edx), "r" (

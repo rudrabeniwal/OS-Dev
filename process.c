@@ -6,7 +6,7 @@ void process_init()
     curr_pid = 0;
 }
 
-void process_create (int *base_address, process_t *process)
+void process_create (void (*base_address)(), process_t *process)
 {
     process->pid=curr_pid++;   
 
@@ -18,7 +18,7 @@ void process_create (int *base_address, process_t *process)
     process->context.ebp = 0;
     process->context.esi = 0;
     process->context.edi = 0;
-    process->context.eip = base_address; 
+    process->context.eip = (int)base_address; 
 
     process->state = READY;
     process->base_address = base_address; 

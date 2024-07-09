@@ -68,20 +68,7 @@ void processB();
 void processC();
 void processD();
 
-void kernel_main()
-{
-    process_t p1, p2, p3, p4;
-
-    screen_init();
-    process_init();
-    scheduler_init();
-
-    process_create(&processA,&p1);
-    process_create(&processB,&p2);
-    process_create(&processC,&p3);
-    process_create(&processD,&p4);
-
-    void processA()
+void processA()
     {
         print("Process A,");
 
@@ -109,6 +96,19 @@ void kernel_main()
         while(1)
             asm("mov $5393, %eax");
     }
+
+void kernel_main()
+{
+    process_t p1, p2, p3, p4;
+
+    screen_init();
+    process_init();
+    scheduler_init();
+
+    process_create( &processA, &p1);
+    process_create( &processB, &p2);
+    process_create( &processC, &p3);
+    process_create( &processD, &p4);
 
     while(1);
 }
