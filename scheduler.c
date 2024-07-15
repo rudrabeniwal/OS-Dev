@@ -21,6 +21,7 @@ void scheduler(int eip, int edi, int esi, int ebp, int esp, int ebx, int edx, in
 {
     print(" EAX = ");
     printi(eax);
+    println();
     process_t *curr_process;
 
     //...//
@@ -28,6 +29,7 @@ void scheduler(int eip, int edi, int esi, int ebp, int esp, int ebx, int edx, in
     //Part-1
 
     curr_process = processes[ curr_sch_pid ];
+    next_process = get_next_process();
 
     //...//
 
