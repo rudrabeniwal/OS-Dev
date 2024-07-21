@@ -1,4 +1,4 @@
-unsigned int heap_base;
+extern unsigned int heap_base;
 
 void heap_init();
 int kalloc(int);

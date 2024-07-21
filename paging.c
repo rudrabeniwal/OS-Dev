@@ -17,7 +17,7 @@ int create_page_entry(int base_address, char present, char writeable, char privi
     return base_address | entry;
 }
 
-void page_init()
+void paging_init()
 {
     //Part - 1:
 
@@ -25,12 +25,12 @@ void page_init()
 
     for (int currPDE = 0; currPDE < PDE_NUM; currPDE++)
     {
-        unsigned int *pagetable = kalloc(4 * PTE_NUM);
+        unsigned int *pagetable = (unsigned int *)kalloc(4 * PTE_NUM);
 
         for (int currPTE = 0; currPTE < PTE_NUM; currPTE++, curr_page_frame++)
             pagetable [currPTE] = create_page_entry(curr_page_frame * 4096, 1, 0, 0, 1, 1, 0, 0, 0);
 
-        page_directory [currPDE] = create_page_entry(pagetable, 1, 0, 0, 1, 1, 0, 0, 0);
+        page_directory [currPDE] = create_page_entry((int)pagetable, 1, 0, 0, 1, 1, 0, 0, 0);
 
     }
 

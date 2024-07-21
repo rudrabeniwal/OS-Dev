@@ -1,5 +1,7 @@
 #include "screen.h"
 #include "scheduler.h"
+#include "paging.h"
+#include "heap.h"
 
 volatile unsigned char *video = (volatile unsigned char *)0xB8000;
 
@@ -12,6 +14,8 @@ int curr_sch_pid;
 process_t *next_process;
 int nextTextPos = 0;
 int currLine = 0;
+unsigned int heap_base = 0x100000;
+unsigned int *page_directory;
 
 //Print
 

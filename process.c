@@ -1,4 +1,5 @@
 #include "process.h"
+#include "heap.h"
 
 void process_init()
 {
@@ -8,7 +9,7 @@ void process_init()
 
 process_t process_create (void (*base_address)())
 {
-    process_t *process = kalloc(sizeof(process_t));
+    process_t *process = (struct process *)kalloc(sizeof(process_t));
     process->pid=curr_pid++;   
 
     process->context.eax = 0;
@@ -27,4 +28,6 @@ process_t process_create (void (*base_address)())
     processes[process->pid] = process;   
 
     processes_count++;
+
+    return *process;
 }
