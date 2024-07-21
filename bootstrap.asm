@@ -66,7 +66,7 @@ printing_finished:
     int 10h  
     ret
 
-title_string db 'The Bootloader of 539 kernel.', 0
+title_string db 'The Bootloader of myKernel.', 0
 message_string db 'The kernel is loading...', 0
 load_error_string db 'The kernel cannot be loaded', 0
 number_of_sectors_to_load db 15d ; 7.5KB

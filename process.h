@@ -18,4 +18,4 @@ extern process_t *processes [15];
 extern int processes_count, curr_pid;
 
 void process_init();
-void process_create (void (*)(), process_t *);
+process_t process_create (void (*)());

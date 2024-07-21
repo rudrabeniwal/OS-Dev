@@ -12,11 +12,13 @@ build: $(BOOTSTRAP_FILE) $(KERNEL_FILES)
 	$(CC) $(KERNEL_FLAGS) screen.c -o screen.elf 
 	$(CC) $(KERNEL_FLAGS) process.c -o process.elf 
 	$(CC) $(KERNEL_FLAGS) scheduler.c -o scheduler.elf 
-	ld -melf_i386 -Tlinker.ld starter.o kernel.elf screen.elf process.elf scheduler.elf -o myKernel.elf
+	$(CC) $(KERNEL_FLAGS) heap.c -o heap.elf
+	$(CC) $(KERNEL_FLAGS) paging.c -o paging.elf
+	ld -melf_i386 -Tlinker.ld starter.o kernel.elf screen.elf process.elf scheduler.elf heap.elf paging.elf -o myKernel.elf
 	objcopy -O binary myKernel.elf myKernel.bin
 	dd if=bootstrap.o of=kernel.img
-	dd seek=1 conv=sync if=myKernel.bin of=kernel.img bs=512 count=5
-	dd seek=6 conv=sync if=/dev/zero of=kernel.img bs=512 count=2046
+	dd seek=1 conv=sync if=myKernel.bin of=kernel.img bs=512 count=8
+	dd seek=9 conv=sync if=/dev/zero of=kernel.img bs=512 count=2046
 	qemu-system-x86_64 -s kernel.img
 
 # Clean target to remove build artifacts
