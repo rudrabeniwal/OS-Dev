@@ -63,6 +63,21 @@ void printi (int number)
         printi(remaining);
     }
 }
+
+void print_hex(unsigned int value) {
+    char hex_chars[] = "0123456789ABCDEF";
+    char buffer[9];
+    buffer[8] = '\0';  // Null-terminate the string
+
+    for (int i = 7; i >= 0; i--) {
+        buffer[i] = hex_chars[value & 0xF];
+        value >>= 4;
+    }
+
+    print(buffer);
+    println();
+}
+
 /* for filling all the screen blue
 volatile unsigned char *video = 0xA0000;
 
@@ -110,14 +125,48 @@ void processA()
             asm("mov $5393, %eax");
     }
 
+int is_paging_enabled() {
+    unsigned int cr0;
+    asm volatile("mov %%cr0, %0" : "=r"(cr0));
+    return cr0 & 0x80000000;
+}
+void print_cr0() 
+{
+    unsigned int cr0;
+    asm volatile("mov %%cr0, %0" : "=r"(cr0));
+    print("CR0 Value in int: ");
+    printi(cr0);
+    println();
+    print("CR0 Value in hex: ");
+    print_hex(cr0);
+    println();
+}
 void kernel_main()
 {
     heap_init();
     paging_init();
+
     screen_init();
+    if (is_paging_enabled()) {
+        print("Paging is enabled");
+    } else {
+        print("Paging is not enabled");
+        println();
+    }
+    print_cr0();
+    // print statement to ensure load_page_directory was called
+    unsigned int cr3;
+    asm volatile("mov %%cr3, %0" : "=r"(cr3));
+    print("CR3 Value in int: ");
+    printi(cr3);
+    println();
+    print("CR3 Value in hex: ");
+    print_hex(cr3);
+    println();
+    
     process_init();
     scheduler_init();
-
+    
     process_create( &processA );
     process_create( &processB );
     process_create( &processC );
