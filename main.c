@@ -128,7 +128,7 @@ void processA()
 int is_paging_enabled() {
     unsigned int cr0;
     asm volatile("mov %%cr0, %0" : "=r"(cr0));
-    return cr0 & 0x80000000;
+    return cr0 & 0x7FFFFFFF;
 }
 void print_cr0() 
 {
@@ -149,6 +149,7 @@ void kernel_main()
     screen_init();
     if (is_paging_enabled()) {
         print("Paging is enabled");
+        println();
     } else {
         print("Paging is not enabled");
         println();
