@@ -22,6 +22,8 @@ void paging_init()
     //Part - 1:
 
     unsigned int curr_page_frame = 0;
+    
+    page_directory = (unsigned int *)kalloc(4 * 1024);
 
     for (int currPDE = 0; currPDE < PDE_NUM; currPDE++)
     {

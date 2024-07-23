@@ -89,7 +89,7 @@ load_task_register:
     ret
 bits 32
 load_page_directory:
-    mov eax, [load_page_directory]
+    mov eax, [page_directory]
     mov cr3, eax
 
     ret
@@ -108,6 +108,9 @@ start_kernel:
     mov es, eax
     mov fs, eax
     mov gs, eax
+
+    ; Set up the stack pointer
+    mov esp, 0x9FC00
 
     sti 
 
