@@ -109,9 +109,6 @@ start_kernel:
     mov fs, eax
     mov gs, eax
 
-    ; Set up the stack pointer
-    mov esp, 0x9FC00
-
     sti 
 
     call kernel_main
