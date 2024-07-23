@@ -95,7 +95,7 @@ load_page_directory:
     ret
 enable_paging:
     mov eax, cr0
-    and eax, 01111111111111111111111111111111b  
+    and eax, 01111111111111111111111111111111b
     mov cr0, eax
 
     ret

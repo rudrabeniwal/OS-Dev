@@ -125,11 +125,7 @@ void processA()
             asm("mov $5393, %eax");
     }
 
-int is_paging_enabled() {
-    unsigned int cr0;
-    asm volatile("mov %%cr0, %0" : "=r"(cr0));
-    return cr0 & 0x7FFFFFFF;
-}
+
 void print_cr0() 
 {
     unsigned int cr0;
@@ -147,15 +143,9 @@ void kernel_main()
     paging_init();
 
     screen_init();
-    if (is_paging_enabled()) {
-        print("Paging is enabled");
-        println();
-    } else {
-        print("Paging is not enabled");
-        println();
-    }
+
     print_cr0();
-    // print statement to ensure load_page_directory was called
+    
     unsigned int cr3;
     asm volatile("mov %%cr3, %0" : "=r"(cr3));
     print("CR3 Value in int: ");
